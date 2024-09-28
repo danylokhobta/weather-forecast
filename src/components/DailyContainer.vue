@@ -5,13 +5,42 @@
         v-for="i in 3" 
         :key="i"
       >
-        <p :class='`date-short bold ${loading && "skeleton-loading-container"}`' v-if="i > 1">{{ dailyForecast[i - 1]?.date?.short }}</p>
-        <p :class='`date-short bold ${loading && "skeleton-loading-container"}`' v-else>Today({{ dailyForecast[0]?.date?.short }})</p>
-        <p :class='`date-full ${loading && "skeleton-loading-container"}`'>{{ dailyForecast[i - 1]?.date?.full }}</p>
-        <img :class='`illustration ${loading && "skeleton-loading-container"}`' :src="dailyForecast[i - 1] ? require(`@/assets/icons/${dayPhase}/${dailyForecast[i - 1].condition?.code}.png`) : ''" />
-        <p :class='`condition bold ${loading && "skeleton-loading-container"}`'>{{ dailyForecast[i - 1]?.condition?.text }}</p>
-        <p :class='`temp ${loading && "skeleton-loading-container"}`'>{{ dailyForecast[i - 1]?.[unitsType]?.mintemp }}-{{ dailyForecast[i - 1]?.[unitsType]?.maxtemp }}{{ dailyForecast[i - 1]?.[unitsType]?.units }}</p>
-        <p :class='`uv ${loading && "skeleton-loading-container"}`'>UV {{ dailyForecast[i - 1]?.uv }}</p>
+        <p
+          :class='`date-short bold ${loading && "skeleton-loading-container"}`'
+          v-if="i > 1"
+        >
+          {{ dailyForecast[i - 1]?.date?.short }}
+        </p>
+        <p
+          :class='`date-short bold ${loading && "skeleton-loading-container"}`'
+          v-else
+        >
+          Today({{ dailyForecast[0]?.date?.short }})
+        </p>
+        <p
+          :class='`date-full ${loading && "skeleton-loading-container"}`'
+        >
+          {{ dailyForecast[i - 1]?.date?.full }}
+        </p>
+        <img
+          :class='`illustration ${loading && "skeleton-loading-container"}`'
+          :src="dailyForecast[i - 1] ? getImage(dailyForecast[i-1]?.condition?.code): ''"
+        />
+        <p
+          :class='`condition bold ${loading && "skeleton-loading-container"}`'
+        >
+          {{ dailyForecast[i - 1]?.condition?.text }}
+        </p>
+        <p
+          :class='`temp ${loading && "skeleton-loading-container"}`'
+        >
+          {{ dailyForecast[i - 1]?.[unitsType]?.mintemp }}-{{ dailyForecast[i - 1]?.[unitsType]?.maxtemp }}{{ dailyForecast[i - 1]?.[unitsType]?.units }}
+        </p>
+        <p
+          :class='`uv ${loading && "skeleton-loading-container"}`'
+        >
+          UV {{ dailyForecast[i - 1]?.uv }}
+        </p>
       </div>
     </div>
   </div>
@@ -20,6 +49,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useStore } from 'vuex';
+import { loadWeatherIcon } from '../utils/assetLoader';
 
 const store = useStore();
 
@@ -28,6 +58,10 @@ const dailyForecast = computed(() => store.getters.getDailyForecast);
 const unitsType = computed(() => store.getters.getUnitsType);
 const dayPhase = computed(() => store.getters.getDayPhase);
 const loading = computed(() => Object.keys(dailyForecast.value).length === 0);
+
+const getImage = (conditionCode:number) => {
+  return loadWeatherIcon(dayPhase.value, conditionCode);
+};
 </script>
 
 <style scoped lang="sass">

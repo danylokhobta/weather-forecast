@@ -11,7 +11,7 @@
     >
       <h5 :class='`light ${loading && "skeleton-loading-container"}`' v-if="i-1 === 0">Now</h5>
       <h5 :class='`light ${loading && "skeleton-loading-container"}`' v-else>{{ hourlyForecast[i-1]?.time[0] }}<span>{{hourlyForecast[i-1]?.time[1]}}</span></h5>
-      <img :class='`illustration ${loading && "skeleton-loading-container"}`' :src="hourlyForecast[i-1] ? require(`@/assets/icons/${dayPhase}/${hourlyForecast[i-1]?.condition?.code}.png`) : ''"/>
+      <img :class='`illustration ${loading && "skeleton-loading-container"}`' :src="getImage(hourlyForecast[i-1]?.condition?.code)" />
       <h3 :class='`temp ${loading && "skeleton-loading-container"}`'>{{ hourlyForecast[i-1] && hourlyForecast[i-1][unitsType]?.temp }}°</h3>
     </swiper-slide>
   </swiper>
@@ -23,6 +23,7 @@ import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
+import { loadWeatherIcon } from '../utils/assetLoader'; // Import the loader
 
 export default defineComponent({
   name: "HourlyContainer",
@@ -38,15 +39,21 @@ export default defineComponent({
     const now: number = (new Date()).getHours();
     const loading = computed(() => Object.keys(hourlyForecast.value).length === 0);
 
+    const getImage = (conditionCode:number) => {
+      return loadWeatherIcon(dayPhase.value, conditionCode);
+    };
+
     const onSwiper = (swiper:any) => {
       console.log(swiper);
     };
+
     return {
       unitsType,
       hourlyForecast,
       dayPhase,
       now,
       loading,
+      getImage,
       onSwiper
     };
   },
@@ -63,6 +70,10 @@ export default defineComponent({
   order: 0
   display: flex
   align-items: center
+  &:hover
+    cursor: grab
+  &:active
+    cursor: grabbing
   .hour-container
     width: 40px !important
     height: $height-m

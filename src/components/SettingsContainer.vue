@@ -1,14 +1,14 @@
 <template>
   <div class="SettingsContainer container">
-    <h3>Settings</h3>
-    <div class="toggle-block">
+    <h3 class="domino-anim">Settings</h3>
+    <div class="toggle-block domino-anim">
       <Switch v-model="isUnitSwitchOn" />
       <div class="indicators">
         <span :class="!isUnitSwitchOn && 'bold'">°F</span>
         <span :class="isUnitSwitchOn && 'bold'">°C</span>
       </div>
     </div>
-    <div class="toggle-block">
+    <div class="toggle-block domino-anim">
       <Switch v-model="isThemeSwitchOn" />
       <div class="indicators">
         <span :class="!isThemeSwitchOn && 'bold'">Day</span>

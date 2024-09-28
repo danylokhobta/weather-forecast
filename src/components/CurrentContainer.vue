@@ -7,7 +7,7 @@
         <h1 :class='`temp domino-anim ${loading && "skeleton-loading-container"}`'>{{ currentForecast[unitsType]?.temp }}°</h1>
       </div>
       <div :class='`illustration domino-anim ${loading && "skeleton-loading-container"}`'>
-        <img :src="require(`@/assets/icons/${dayPhase}/${currentForecast.condition?.code}.png`)" />
+        <img :src="getImage(currentForecast?.condition?.code)" />
       </div>
     </div>
   </div>
@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useStore } from 'vuex';
+import { loadWeatherIcon } from '../utils/assetLoader';
 
 const store = useStore();
 
@@ -24,6 +25,10 @@ const currentForecast = computed(() => store.getters.getCurrentForecast);
 const unitsType = computed(() => store.getters.getUnitsType);
 const dayPhase = computed(() => store.getters.getDayPhase);
 const loading = computed(() => Object.keys(currentForecast.value).length === 0);
+
+const getImage = (conditionCode:number) => {
+  return loadWeatherIcon(dayPhase.value, conditionCode);
+};
 </script>
 
 <style scoped lang="sass">

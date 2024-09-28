@@ -5,6 +5,8 @@ import { Module, Commit } from 'vuex';
 interface Condition {
   code: string;
   text: string;
+  day: any;
+  night: any;
 }
 interface Date {
   full: string;

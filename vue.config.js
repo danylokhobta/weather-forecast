@@ -1,4 +1,5 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require('@vue/cli-service');
+
 module.exports = defineConfig({
   transpileDependencies: true,
   css: {
@@ -10,5 +11,8 @@ module.exports = defineConfig({
         `
       }
     }
-  }
-})
+  },
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/weather-forecast/'  // Replace <REPO_NAME> with the name of your repository
+    : '/'
+});

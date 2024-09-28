@@ -2,24 +2,24 @@
   <div class="AstroContainer container">
     <div v-if="astro.length > 0" class="skeleton-loading"></div>
     <div v-else class="content">
-      <div class="moon-phase">
+      <div class="moon-phase domino-anim">
         <h5 :class='`light ${loading && "skeleton-loading-container"}`'>{{ astro.moon_phase }}</h5>
         <p :class='loading && "skeleton-loading-container"'>{{ astro.moon_illumination }}%</p>
       </div>
-      <div :class='`illustration ${!isImageLoaded && "skeleton-loading-container"}`'>
+      <div :class='`illustration ${!isImageLoaded && "skeleton-loading-container"} domino-anim`'>
         <img
           src="https://moonphase.guide/module/MY0FDZG9seFNWTXp2bGhqREZLNWlUS29mclRoMmYyR25CZit5RXpSMzBzK2pxSm5laldCQVpEZ05NTEl0MklqMVhYZ2t0aWxqWFNJTkhYdlJRbGVVV3c9PQ.png"
           @load="onImageLoad"
         />
       </div>
-      <div class="time">
+      <div class="time domino-anim">
         <div :class='`moonset ${loading && "skeleton-loading-container"}`'> 
-          <img id="Moonset Icon" :src="require(`@/assets/icons/moonset.png`)" />
+          <img id="Moonset Icon" :src="require(`/public/icons/moonset.png`)" />
           <p class="bold">{{ astro.moonset?.slice(0, -3) }}</p>
         </div>
         <div :class='`moonrise ${loading && "skeleton-loading-container"}`'>
           <p class="bold">{{ astro.moonrise?.slice(0, -3) }}</p>
-          <img id="Moonrise Icon" :src="require(`@/assets/icons/moonrise.png`)" />
+          <img id="Moonrise Icon" :src="require(`/public/icons/moonrise.png`)" />
         </div>
       </div>
     </div>
