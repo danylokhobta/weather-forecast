@@ -233,7 +233,7 @@ const mutations = {
 
 const actions = {
   async fetchWeatherForecast({ commit, state }: { commit: Commit, state: WeatherState }) {
-    const API_KEY = '0f0c9fea271b40bc90d104247240706';
+    const API_KEY = 'f8da4d1726b84e6086a85420241010';
     try {
       const response: AxiosResponse<RawForecast> = await axios.get(
         `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${state.location}&days=3`
